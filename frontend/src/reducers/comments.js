@@ -1,21 +1,24 @@
-import {ADD_POST, DELETE_POST, DOWNVOTE_POST, RECEIVE_ALL_POSTS, UPDATE_POST, UPVOTE_POST} from "../actions/posts";
-import {ADD_COMMENT, DELETE_COMMENT} from "../actions/comments";
+import {
+    ADD_COMMENT,
+    DELETE_COMMENT,
+    DOWNVOTE_COMMENT,
+    RECEIVE_COMMENTS,
+    UPDATE_COMMENT,
+    UPVOTE_COMMENT
+} from "../actions/comments";
 
-export default function posts(state = {}, action) {
+export default function comments(state = [], action) {
     switch (action.type) {
-        case RECEIVE_ALL_POSTS:
-            return action.posts.reduce((object, value)=> {
+        case RECEIVE_COMMENTS:
+            const received = action.comments.reduce((object, value)=> {
                 object[value.id] = value;
                 return object;
             }, {});
-        case ADD_POST:
-        case UPDATE_POST:
-            const post = action.post;
             return {
                 ...state,
-                [post.id]: post
+                ...received,
             };
-        case UPVOTE_POST:
+        case UPVOTE_COMMENT:
             const upvoteId = action.id;
             if (state[upvoteId]) {
                 return {
@@ -28,7 +31,7 @@ export default function posts(state = {}, action) {
             } else {
                 return state;
             }
-        case DOWNVOTE_POST:
+        case DOWNVOTE_COMMENT:
             const downvoteId = action.id;
             if (state[downvoteId]) {
                 return {
@@ -41,28 +44,19 @@ export default function posts(state = {}, action) {
             } else {
                 return state;
             }
-        case DELETE_POST:
-            return {
-                ...state,
-                [action.post.id]: {
-                    ...state[action.post.id],
-                    deleted: true,
-                }
-            };
         case ADD_COMMENT:
+        case UPDATE_COMMENT:
+            const comment = action.comment;
             return {
                 ...state,
-                [action.comment.parentId]: {
-                    ...state[action.comment.parentId],
-                    commentCount: state[action.comment.parentId].commentCount + 1,
-                }
+                [comment.id]: comment
             };
         case DELETE_COMMENT:
             return {
                 ...state,
-                [action.comment.parentId]: {
-                    ...state[action.comment.parentId],
-                    commentCount: state[action.comment.parentId].commentCount - 1,
+                [action.comment.id]: {
+                    ...state[action.comment.id],
+                    deleted: true,
                 }
             };
         default:

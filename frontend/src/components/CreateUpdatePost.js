@@ -48,12 +48,13 @@ class CreateUpdatePost extends Component {
     render() {
         const { id, title, body, author, category } = this.state;
         const { categories } = this.props;
-        return (<form onSubmit={this.handleSubmit} className='column'>
+        return (<form onSubmit={this.handleSubmit} className='column post-form'>
             <input
                 type='text'
                 placeholder='Title of your post'
                 value={title}
                 onChange={(e) => this.handleInputChange(e, 'title')}
+                className='text-input'
             />
             <textarea
                 placeholder="What do you want to post?"
@@ -67,10 +68,12 @@ class CreateUpdatePost extends Component {
                 value={author}
                 onChange={(e) => this.handleInputChange(e, 'author')}
                 disabled={!!id}
+                className='text-input'
             />
             <select
                 onChange={(e) => this.handleInputChange(e, 'category')}
                 disabled={!!id}
+                className='select-input'
             >
                 {categories && categories.map(category =>
                     (<option key={category.name} value={category.name}>{category.name}</option>))}

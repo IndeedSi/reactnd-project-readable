@@ -1,4 +1,4 @@
-import { getAllPosts, createPost, updatePostContent, upvotePost, downvotePost } from '../utils/ReadableAPI'
+import {getAllPosts, createPost, updatePostContent, upvotePost, downvotePost, deletePost} from '../utils/ReadableAPI'
 import {generateUID} from "../utils/helpers";
 
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS';
@@ -70,7 +70,7 @@ export const handleUpvotePost = (id) => {
         upvotePost(id)
             .catch(error => {
                 console.log(error);
-                alert("Failed to upvote post ");
+                alert("Failed to up-vote post ");
                 dispatch(downvotePostAction(id));
             })
     }
@@ -82,8 +82,27 @@ export const handleDownvotePost = (id) => {
         downvotePost(id)
             .catch(error => {
                 console.log(error);
-                alert("Failed to upvote post ");
+                alert("Failed to down-vote post ");
                 dispatch(upvotePostAction(id));
+            })
+    }
+};
+
+export const DELETE_POST = 'DELETE_POST';
+
+const deletePostAction = (post) => ({
+    type: DELETE_POST,
+    post,
+});
+
+export const handleDeletePost = (post) => {
+    return (dispatch) => {
+        dispatch(deletePostAction(post));
+        deletePost(post.id)
+            .catch(error => {
+                console.log(error);
+                alert("Failed to delete post ");
+                dispatch(addPost(post));
             })
     }
 };

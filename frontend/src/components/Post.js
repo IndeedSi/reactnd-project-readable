@@ -19,7 +19,7 @@ class Post extends Component {
         }
         const { id, timestamp, title, body, author, commentCount, voteScore } = post;
         return (
-            <div className='row'>
+            <div className='row post-wrapper'>
                 <Votes
                     voteScore={voteScore}
                     upVote={() => this.handleUpvote(id)}
@@ -27,13 +27,13 @@ class Post extends Component {
                 />
                 <Link to={`/post/${id}`} className='post'>
                     <div className='column'>
-                        <div> {title} </div>
+                        <div className='post-title'> {title} </div>
                         <div>
-                            <span>Posted by {author} </span>
-                            <span>{formatDate(timestamp)}</span>
+                            <span className='post-author'>Posted by {author} </span>
+                            <span className='post-timestamp'>{formatDate(timestamp)}</span>
                         </div>
-                        <div> {body} </div>
-                        <div> {commentCount} comments</div>
+                        <div className='post-body'> {body} </div>
+                        <div className='post-comment-count'> {commentCount} comments</div>
                     </div>
                 </Link>
             </div>
@@ -41,7 +41,7 @@ class Post extends Component {
     }
 }
 
-const mapStateToProps = ({posts}, {id, hideBody}) => {
+const mapStateToProps = ({posts}, {id}) => {
     const post = posts[id];
     return {
         post,

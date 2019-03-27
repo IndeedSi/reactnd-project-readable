@@ -17,6 +17,10 @@ class PostList extends Component {
             ( sortBy === 'voteScore'
                 ? posts[b].voteScore - posts[a].voteScore
                 : posts[b].timestamp - posts[a].timestamp));
+        const filteredIds = sortedIds && sortedIds.filter((id) => (!posts[id].deleted));
+        if (!filteredIds) {
+            return (<div className='no-post-list'>No posts in current category</div>)
+        }
         return (
             <div className='post-list-container'>
                 <div className='post-list-header'>
@@ -26,8 +30,7 @@ class PostList extends Component {
                     </select>
                 </div>
                 <div className='post-list'>
-                    { sortedIds && sortedIds.map(id => (<Post key={id} id={id} />)) }
-                    { !sortedIds && <div>No posts in current category</div>}
+                    { filteredIds && filteredIds.map(id => (<Post key={id} id={id} />)) }
                 </div>
             </div>
         );

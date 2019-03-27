@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { handleGetPosts } from "../actions/posts";
 import CreateUpdatePost from "./CreateUpdatePost";
 import PostDetail from "./PostDetail";
+import CreateUpdateComment from "./CreateUpdateComment";
 
 class App extends Component {
     componentDidMount() {
@@ -17,13 +18,16 @@ class App extends Component {
         const { categories } = this.props;
         return (
             <Router>
-                <div className="App">
+                <div>
                     <Nav categories={categories} />
-                    <Route exact path='/' component={PostListPage} />
-                    <Route exact path='/new' component={CreateUpdatePost} />
-                    <Route path='/category/:category' component={PostListPage} />
-                    <Route exact path='/post/:id' component={PostDetail} />
-                    <Route path='/post/:id/edit' component={CreateUpdatePost} />
+                    <div className="app-body">
+                        <Route exact path='/' component={PostListPage} />
+                        <Route exact path='/new' component={CreateUpdatePost} />
+                        <Route path='/category/:category' component={PostListPage} />
+                        <Route exact path='/post/:id' component={PostDetail} />
+                        <Route path='/post/:id/edit' component={CreateUpdatePost} />
+                        <Route path='/comment/:id/edit' component={CreateUpdateComment} />
+                    </div>
                 </div>
             </Router>
         );
