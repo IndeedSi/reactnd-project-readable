@@ -19,7 +19,7 @@ class PostList extends Component {
                 : posts[b].timestamp - posts[a].timestamp));
         const filteredIds = sortedIds && sortedIds.filter((id) => (!posts[id].deleted));
         if (!filteredIds) {
-            return (<div className='no-post-list'>No posts in current category</div>)
+            return (<div className='not-found'>No posts in current category</div>)
         }
         return (
             <div className='post-list-container'>

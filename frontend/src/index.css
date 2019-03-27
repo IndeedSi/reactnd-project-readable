@@ -117,7 +117,7 @@ a {
 }
 
 .post-body {
-    padding: 10px 0;
+    padding: 5px 0;
     font-size: 16px;
 }
 
@@ -219,8 +219,12 @@ a {
     border-width: 2px;
 }
 
-.no-post-list {
+.not-found {
     height: 500px;
     padding: 50px;
     font-size: 24px;
+}
+
+.post-column {
+    width: 100%;
 }

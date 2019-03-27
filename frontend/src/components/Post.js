@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { formatDate } from '../utils/helpers'
-import {handleDownvotePost, handleUpvotePost} from "../actions/posts";
+import {handleDeletePost, handleDownvotePost, handleUpvotePost} from "../actions/posts";
 import Votes from './Votes';
 
 class Post extends Component {
@@ -12,12 +12,24 @@ class Post extends Component {
     handleDownvote = (id) => {
         this.props.dispatch(handleDownvotePost(id));
     };
+    handleEdit = () => {
+        const { post, history } = this.props;
+        if (post && post.id && history) {
+            history.push(`/post/${post.id}/edit`);
+        }
+    };
+    handleDelete = () => {
+        const { post, dispatch } = this.props;
+        if (post && post.id) {
+            dispatch(handleDeletePost(post));
+        }
+    };
     render() {
         const { post } = this.props;
         if (post == null) {
             return (<div>This post doesn't exist</div>);
         }
-        const { id, timestamp, title, body, author, commentCount, voteScore } = post;
+        const { id, timestamp, title, category, author, commentCount, voteScore } = post;
         return (
             <div className='row post-wrapper'>
                 <Votes
@@ -25,17 +37,21 @@ class Post extends Component {
                     upVote={() => this.handleUpvote(id)}
                     downVote={() => this.handleDownvote(id)}
                 />
-                <Link to={`/post/${id}`} className='post'>
-                    <div className='column'>
+                <div className='column post-column'>
+                    <Link to={`/${category}/${id}`} className='post'>
                         <div className='post-title'> {title} </div>
                         <div>
                             <span className='post-author'>Posted by {author} </span>
                             <span className='post-timestamp'>{formatDate(timestamp)}</span>
                         </div>
-                        <div className='post-body'> {body} </div>
-                        <div className='post-comment-count'> {commentCount} comments</div>
+                        <div className='post-body'>  </div>
+                    </Link>
+                    <div className='row'>
+                        <div className='post-comment-count'>{commentCount} comments</div>
+                        <div className='edit-btn' onClick={this.handleEdit}>Edit Post</div>
+                        <div className='delete-btn' onClick={this.handleDelete}>Delete Post</div>
                     </div>
-                </Link>
+                </div>
             </div>
         )
     }

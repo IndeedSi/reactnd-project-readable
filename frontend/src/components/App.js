@@ -3,7 +3,7 @@ import Nav from './Nav';
 import PostListPage from './PostListPage';
 import { connect } from 'react-redux';
 import { initializeCategories } from "../actions/categories";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { handleGetPosts } from "../actions/posts";
 import CreateUpdatePost from "./CreateUpdatePost";
 import PostDetail from "./PostDetail";
@@ -21,12 +21,14 @@ class App extends Component {
                 <div>
                     <Nav categories={categories} />
                     <div className="app-body">
-                        <Route exact path='/' component={PostListPage} />
-                        <Route exact path='/new' component={CreateUpdatePost} />
-                        <Route path='/category/:category' component={PostListPage} />
-                        <Route exact path='/post/:id' component={PostDetail} />
-                        <Route path='/post/:id/edit' component={CreateUpdatePost} />
-                        <Route path='/comment/:id/edit' component={CreateUpdateComment} />
+                        <Switch>
+                            <Route exact path='/' component={PostListPage} />
+                            <Route exact path='/new' component={CreateUpdatePost} />
+                            <Route path='/comment/:id/edit' component={CreateUpdateComment} />
+                            <Route path='/post/:id/edit' component={CreateUpdatePost} />
+                            <Route exact path='/:category/:id' component={PostDetail} />
+                            <Route path='/:category' component={PostListPage} />
+                        </Switch>
                     </div>
                 </div>
             </Router>

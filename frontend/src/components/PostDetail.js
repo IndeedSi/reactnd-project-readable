@@ -36,7 +36,7 @@ class PostDetail extends Component {
     render() {
         const { post, commentIds } = this.props;
         if (post == null) {
-            return (<div>This post doesn't exist</div>);
+            return (<div className='not-found'>This post doesn't exist</div>);
         }
         const { id, timestamp, title, body, author, commentCount, voteScore } = post;
         return (
