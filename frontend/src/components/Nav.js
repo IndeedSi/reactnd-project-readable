@@ -16,7 +16,7 @@ const Nav = ({ categories }) => (
             </li>
             { categories && categories.map((category) => (
                 <li key={category.path}>
-                    <NavLink to={category.path} activeClassName='active'>
+                    <NavLink to={`/category/${category.path}`} activeClassName='active'>
                         {category.name}
                     </NavLink>
                 </li>

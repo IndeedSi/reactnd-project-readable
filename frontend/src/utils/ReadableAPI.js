@@ -7,6 +7,7 @@ if (!token)
 
 const headers = {
     'Accept': 'application/json',
+    'Content-Type': 'application/json',
     'Authorization': token
 };
 
@@ -22,4 +23,21 @@ export const getAllPosts = () =>
 
 export const getPostsInCategory = (category) =>
     fetch(`${api}/${category}/posts`, { headers })
+        .then((result) => result.json());
+
+export const createPost = (post) =>
+    fetch(`${api}/posts`, { method: "POST", body: JSON.stringify(post), headers })
+        .then((result) => result.json());
+
+export const updatePostContent = ({id, title, body}) =>
+    fetch(`${api}/posts/${id}`, { method: "PUT", body: JSON.stringify({title, body}), headers })
+        .then((result) => result.json());
+
+export const upvotePost = (id) =>
+    fetch(`${api}/posts/${id}`, { method: "POST", body: JSON.stringify({option: 'upVote'}), headers })
+        .then((result) => result.json());
+
+
+export const downvotePost = (id) =>
+    fetch(`${api}/posts/${id}`, { method: "POST", body: JSON.stringify({option: 'downVote'}), headers })
         .then((result) => result.json());

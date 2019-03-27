@@ -27,7 +27,32 @@ code {
     text-decoration: none;
 }
 
-.nav a {
+.active {
+    font-weight: bold;
+}
+
+a {
     text-decoration: none;
     color: #252525;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post-list-header {
+    align-self: flex-end;
+    margin-right: 20%;
 }
